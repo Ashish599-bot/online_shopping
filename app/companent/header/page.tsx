@@ -1,7 +1,7 @@
 export default function Header() {
   return (
     <header className="bg-white shadow-md p-4 flex items-center justify-between">
-      <h1 className="text-2xl font-bold text-gray-800">Nivro</h1>
+      <img src="/logo.jpg" alt="logo" className="h-[120px]" />
 
       <nav className="flex items-center space-x-4">
         <a href="#" className="text-gray-700 hover:text-blue-500">
