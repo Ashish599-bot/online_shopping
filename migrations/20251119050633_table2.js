@@ -6,7 +6,7 @@ exports.up = function (knex) {
     table.string("description").notNullable();
     table.string("brand").notNullable();
     table
-      .integer("users_id")
+      .integer("user_id")
       .unsigned()
       .references("id")
       .inTable("users")
