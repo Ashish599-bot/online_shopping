@@ -94,9 +94,11 @@ export default function Home() {
                   <img
                     src="/boy.jpg"
                     alt="mini"
-                    className="w-[56px] h-[56px] rounded-md object-cover"
+                    className="w-[60px] h-[56px] rounded-md object-cover"
                   />
-                  <p className=" text-sm">Delivery all around the world</p>
+                  <p className=" text-sm text-gray-500">
+                    Delivery all around the world
+                  </p>
                 </div>
               </motion.div>
             </motion.div>
@@ -177,7 +179,7 @@ export default function Home() {
         </Swiper>
       </section>
 
-      <section className="max-w-7xl mx-auto px-6 lg:px-8 py-12">
+      <section className="max-w-7xl mx-auto px-6 lg:px-8 py-12 cursor-pointer">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">
           Deals & Highlights
         </h2>
