@@ -5,12 +5,6 @@ exports.up = function (knex) {
     table.decimal("price").notNullable();
     table.string("description").notNullable();
     table.string("brand").notNullable();
-    table
-      .integer("user_id")
-      .unsigned()
-      .references("id")
-      .inTable("users")
-      .onDelete("CASCADE");
     table.timestamps(true, true);
   });
 };
