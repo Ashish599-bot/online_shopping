@@ -155,7 +155,7 @@ export default function Home() {
             <SwiperSlide key={p.id}>
               <motion.div
                 whileHover={{ scale: 1.03 }}
-                className="bg-white p-4 rounded-xl shadow hover:shadow-xl transition cursor-pointer"
+                className="bg-white p-4 rounded-xl shadow hover:shadow-xl"
               >
                 <div className="w-full h-[180px] overflow-hidden rounded-lg">
                   <img

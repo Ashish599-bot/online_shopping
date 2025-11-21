@@ -4,10 +4,10 @@ export default function Header() {
       <img src="/logo.jpg" alt="logo" className="h-[120px]" />
 
       <nav className="flex items-center space-x-4">
-        <a href="/home" className="text-gray-700 hover:text-blue-500">
+        <a href="/" className="text-gray-700 hover:text-blue-500">
           Home
         </a>
-        <a href="#" className="text-gray-700 hover:text-blue-500">
+        <a href="/products" className="text-gray-700 hover:text-blue-500">
           Products
         </a>
         <a href="#" className="text-gray-700 hover:text-blue-500">
