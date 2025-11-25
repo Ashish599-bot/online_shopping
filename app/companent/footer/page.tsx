@@ -56,7 +56,7 @@ export default function Footer() {
       </div>
 
       <div className="text-center mt-6 text-sm">
-        © 2025 ShopNova. All rights reserved.
+        © 2025 Nivro. All rights reserved.
       </div>
     </footer>
   );
