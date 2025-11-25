@@ -56,17 +56,11 @@ export default function Home() {
               </p>
 
               <div className="flex gap-4">
-                <a
-                  href="#featured"
-                  className="inline-flex items-center justify-center rounded-md bg-blue-600 px-6 py-3 text-white font-semibold shadow hover:bg-blue-700"
-                >
+                <a className="inline-flex items-center justify-center rounded-md bg-blue-600 px-6 py-3 text-white font-semibold shadow hover:bg-blue-700">
                   Shop Featured
                 </a>
 
-                <a
-                  href="#categories"
-                  className="inline-flex items-center justify-center rounded-md border border-gray-200 px-6 py-3 text-gray-700 bg-white hover:bg-gray-50"
-                >
+                <a className="inline-flex items-center justify-center rounded-md border border-gray-200 px-6 py-3 text-gray-700 bg-white hover:bg-gray-50">
                   Browse Categories
                 </a>
               </div>
@@ -213,26 +207,6 @@ export default function Home() {
               Top payment gateways & SSL protection.
             </p>
           </motion.div>
-        </div>
-      </section>
-
-      <section className="bg-blue-600 text-white py-12 mt-12">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div>
-            <h3 className="text-2xl font-bold">
-              Ready to find something great?
-            </h3>
-            <p className="text-blue-100 mt-1">
-              Explore curated collections and exclusive deals today.
-            </p>
-          </div>
-
-          <a
-            href="#featured"
-            className="inline-flex items-center px-6 py-3 bg-white text-blue-600 font-semibold rounded-md shadow hover:bg-gray-100"
-          >
-            Start Shopping
-          </a>
         </div>
       </section>
     </main>

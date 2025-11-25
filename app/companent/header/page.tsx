@@ -10,7 +10,7 @@ export default function Header() {
         <a href="/products" className="text-gray-700 hover:text-blue-500">
           Products
         </a>
-        <a href="#" className="text-gray-700 hover:text-blue-500">
+        <a href="/deals" className="text-gray-700 hover:text-blue-500">
           Deals
         </a>
         <a href="/log" className="text-gray-700 hover:text-blue-500">
