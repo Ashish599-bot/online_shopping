@@ -3,28 +3,38 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function LogPage() {
+export default function SignupPage() {
   const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLogin, setIsLogin] = useState(true);
+  const [token, setToken] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  async function handleSubmit(e: any) {
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const res = await fetch("/api", {
+    const endpoint = isLogin ? "/api/loggin" : "/api/signup";
+    const res = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
-    if (!res.ok) {
-      const errorData = await res.json();
-      return alert(`Failed to add: ${errorData.error || "Unknown error"}`);
+    const data = await res.json();
+    if (res.ok) {
+      if (isLogin) {
+        setToken(data.token);
+        alert("Logged in successfully!");
+        router.push("/");
+      } else {
+        alert("Account created successfully! Please login.");
+        setIsLogin(true);
+      }
     } else {
-      router.push("/");
-      alert("Successfully fetch");
+      alert(data.error);
     }
-  }
+  };
 
   function handleCancel() {
     router.push("/");
@@ -42,6 +52,9 @@ export default function LogPage() {
         </div>
 
         <div className="p-10 mb-8">
+          <h2 className="text-2xl font-bold text-center mb-6">
+            {isLogin ? "Login" : "Sign Up"}
+          </h2>
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
               <label className="block text-gray-700 font-medium mb-1">
@@ -53,6 +66,7 @@ export default function LogPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2"
+                required
               />
             </div>
 
@@ -61,11 +75,12 @@ export default function LogPage() {
                 Password
               </label>
               <input
-                type={showPassword ? "password" : "taxt"}
+                type={showPassword ? "password" : "text"}
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 "
+                required
               />
               <button
                 type="button"
@@ -116,7 +131,15 @@ export default function LogPage() {
                 type="submit"
                 className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 shadow-lg cursor-pointer"
               >
-                Login
+                {isLogin ? "Login" : "Sign Up"}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setIsLogin(!isLogin)}
+                className="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 shadow-lg cursor-pointer"
+              >
+                {isLogin ? "Create Account" : "Already have an account? Login"}
               </button>
 
               <button
@@ -131,7 +154,9 @@ export default function LogPage() {
         </div>
 
         <p className="text-center text-gray-600 mb-8 text-sm">
-          Welcome! Please login to your account to continue.
+          {isLogin
+            ? "Welcome! Please login to your account to continue."
+            : "Create an account to get started."}
         </p>
       </div>
     </div>
