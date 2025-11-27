@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
     "swiper@10",
     "jsonwebtoken",
     "bcryptjs",
+    "dotenv",
+    "nodemailer",
+    "resend",
   ],
 };
 

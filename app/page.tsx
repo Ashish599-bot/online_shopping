@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -8,10 +8,10 @@ import "swiper/css/pagination";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { motion } from "framer-motion";
 const categories = [
-  { id: 1, name: "Clothing", img: "/clothing.jpg", href: "/signup" },
-  { id: 2, name: "Electronics", img: "/electronics.jpg", href: "/signup" },
-  { id: 3, name: "Accessories", img: "/accessories.jpg", href: "/signup" },
-  { id: 4, name: "Home & Living", img: "/home.jpg", href: "/signup" },
+  { id: 1, name: "Clothing", img: "/clothing.jpg" },
+  { id: 2, name: "Electronics", img: "/electronics.jpg" },
+  { id: 3, name: "Accessories", img: "/accessories.jpg" },
+  { id: 4, name: "Home & Living", img: "/home.jpg" },
 ];
 
 const featured = [
@@ -56,17 +56,11 @@ export default function Home() {
               </p>
 
               <div className="flex gap-4">
-                <a
-                  href="/signup"
-                  className="inline-flex items-center justify-center rounded-md bg-blue-600 px-6 py-3 text-white font-semibold shadow hover:bg-blue-700"
-                >
+                <a className="inline-flex items-center justify-center rounded-md bg-blue-600 px-6 py-3 text-white font-semibold shadow hover:bg-blue-700">
                   Shop Featured
                 </a>
 
-                <a
-                  href="/signup"
-                  className="inline-flex items-center justify-center rounded-md border border-gray-200 px-6 py-3 text-gray-700 bg-white hover:bg-gray-50"
-                >
+                <a className="inline-flex items-center justify-center rounded-md border border-gray-200 px-6 py-3 text-gray-700 bg-white hover:bg-gray-50">
                   Browse Categories
                 </a>
               </div>
@@ -118,18 +112,14 @@ export default function Home() {
               whileHover={{ scale: 1.03 }}
               className="relative rounded-xl overflow-hidden shadow cursor-pointer bg-white"
             >
-              <Link href={c.href}>
-                <img
-                  src={c.img}
-                  alt={c.name}
-                  className="w-full h-40 object-cover"
-                />
-                <div className="absolute inset-0 bg-black/20 flex items-end p-4">
-                  <div className="text-white font-semibold text-lg">
-                    {c.name}
-                  </div>
-                </div>
-              </Link>
+              <img
+                src={c.img}
+                alt={c.name}
+                className="w-full h-40 object-cover"
+              />
+              <div className="absolute inset-0 bg-black/20 flex items-end p-4">
+                <div className="text-white font-semibold text-lg">{c.name}</div>
+              </div>
             </motion.div>
           ))}
         </div>
