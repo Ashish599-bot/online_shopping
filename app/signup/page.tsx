@@ -8,6 +8,7 @@ export default function SignupPage() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userName, setUserName] = useState("");
   const [isLogin, setIsLogin] = useState(true);
   const [token, setToken] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -19,20 +20,37 @@ export default function SignupPage() {
     const res = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({
+        email,
+        password,
+        ...(isLogin ? {} : { user_name: userName }),
+      }),
     });
-    const data = await res.json();
+
+    let data;
+    try {
+      data = await res.json();
+    } catch (err) {
+      console.error("Failed to parse JSON:", err);
+      alert("Unexpected server response");
+      return;
+    }
+
     if (res.ok) {
       if (isLogin) {
         setToken(data.token);
+        // Store login status in localStorage
+        if (typeof window !== "undefined") {
+          localStorage.setItem("isLoggedIn", "true");
+        }
         alert("Logged in successfully!");
         router.push("/");
       } else {
-        alert("Account created successfully! Please login.");
+        alert(data.message);
         setIsLogin(true);
       }
     } else {
-      alert(data.error);
+      alert(data.error || "Signup failed");
     }
   };
 
@@ -56,6 +74,21 @@ export default function SignupPage() {
             {isLogin ? "Login" : "Sign Up"}
           </h2>
           <form className="space-y-4" onSubmit={handleSubmit}>
+            {!isLogin && (
+              <div>
+                <label className="block text-gray-700 font-medium mb-1">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  placeholder="Enter your name"
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2"
+                  required={!isLogin}
+                />
+              </div>
+            )}
             <div>
               <label className="block text-gray-700 font-medium mb-1">
                 Email

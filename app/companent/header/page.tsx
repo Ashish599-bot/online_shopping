@@ -1,35 +1,65 @@
-export default function Header() {
-  return (
-    <header className="bg-white shadow-md p-4 flex items-center justify-between">
-      <img src="/logo.jpg" alt="logo" className="h-[120px]" />
+"use client";
 
-      <nav className="flex items-center space-x-4">
-        <a href="/" className="text-gray-700 hover:text-blue-500">
-          Home
-        </a>
-        <a href="/products" className="text-gray-700 hover:text-blue-500">
-          Products
-        </a>
-        <a href="/deals" className="text-gray-700 hover:text-blue-500">
-          Deals
-        </a>
-        <a href="/signup" className="text-gray-700 hover:text-blue-500">
-          Signup
-        </a>
-        <a href="#" className="relative">
-          <svg
-            className="w-6 h-6 text-gray-700"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path d="M3 3h2l.4 2M7 13h10l4-8H5.4"></path>
-          </svg>
-          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
-            3
-          </span>
-        </a>
-      </nav>
+import React, { useState } from "react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+export default function Header() {
+  const navItems = [
+    { name: "Home", path: "/" },
+    { name: "Products", path: "/products" },
+    { name: "Signup", path: "/signup" },
+  ];
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    router.push("/signup");
+  };
+  return (
+    <header className="bg-blue-600 text-white shadow-md">
+      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+        <div className="flex gap-6">
+          <img src={"/logo.jpg"} className="h-[80px] rounded-lg" />
+          <h1 className="text-xl font-bold pt-6">Nivro</h1>
+        </div>
+        <nav>
+          <ul className="flex space-x-4">
+            {navItems.map((item) => (
+              <li key={item.path}>
+                <Link
+                  href={item.path}
+                  className={`hover:text-blue-200 cursor-pointer ${
+                    pathname === item.path ? "font-bold underline" : ""
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div>
+          {window.localStorage.getItem("isLoggedIn") ? (
+            <div>
+              <button
+                onClick={handleLogout}
+                className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <Link
+              href="/signup"
+              className="bg-white text-blue-600 hover:bg-blue-100 px-4 py-2 rounded font-medium"
+            >
+              Login
+            </Link>
+          )}
+        </div>
+      </div>
     </header>
   );
 }
