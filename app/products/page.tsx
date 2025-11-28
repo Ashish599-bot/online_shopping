@@ -3,7 +3,7 @@
 import { useState } from "react";
 import FlipCard from "../companent/flipping/page";
 
-const PRODUCTS = [
+const products = [
   {
     id: 1,
     name: "T-Shirt",
@@ -38,7 +38,7 @@ const PRODUCTS = [
   },
 ];
 
-const CATEGORIES = [
+const categories = [
   { id: "clothing", label: "Clothing" },
   { id: "electronics", label: "Electronics" },
   { id: "accessories", label: "Accessories" },
@@ -49,21 +49,21 @@ export default function DealsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const filteredProducts = selectedCategory
-    ? PRODUCTS.filter((p) => p.category === selectedCategory)
-    : PRODUCTS;
+    ? products.filter((p) => p.category === selectedCategory)
+    : products;
 
   return (
     <main className="max-w-7xl mx-auto px-6 py-8">
       <div className="flex gap-4 mb-6">
-        {CATEGORIES.map((cat) => (
+        {categories.map((cate) => (
           <button
-            key={cat.id}
-            onClick={() => setSelectedCategory(cat.id)}
-            className={`px-4 py-2 rounded-md border ${
-              selectedCategory === cat.id ? "bg-blue-600 text-white" : ""
+            key={cate.id}
+            onClick={() => setSelectedCategory(cate.id)}
+            className={`px-4 py-2 rounded-md border cursor-pointer ${
+              selectedCategory === cate.id ? "bg-blue-600 text-white " : ""
             }`}
           >
-            {cat.label}
+            {cate.label}
           </button>
         ))}
         <button
@@ -73,7 +73,7 @@ export default function DealsPage() {
           All
         </button>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 cursor-pointer">
         {filteredProducts.map((product) => (
           <FlipCard key={product.id} product={product} />
         ))}
