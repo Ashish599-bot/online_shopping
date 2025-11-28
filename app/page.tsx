@@ -56,13 +56,13 @@ export default function Home() {
               </p>
 
               <div className="flex gap-4">
-                <a className="inline-flex items-center justify-center rounded-md bg-blue-600 px-6 py-3 text-white font-semibold shadow hover:bg-blue-700">
+                <button className="items-center justify-center rounded-md bg-blue-600 px-6 py-3 text-white font-semibold shadow hover:bg-blue-700 cursor-pointer">
                   Shop Featured
-                </a>
+                </button>
 
-                <a className="inline-flex items-center justify-center rounded-md border border-gray-200 px-6 py-3 text-gray-700 bg-white hover:bg-gray-50">
+                <button className=" items-center justify-center rounded-md border border-gray-200 px-6 py-3 text-gray-700 bg-white hover:bg-gray-50 cursor-pointer">
                   Browse Categories
-                </a>
+                </button>
               </div>
             </motion.div>
 
