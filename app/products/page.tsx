@@ -1,77 +1,81 @@
 "use client";
 
 import { useState } from "react";
+import FlipCard from "../companent/flipping/page";
 
 const PRODUCTS = [
   {
     id: 1,
     name: "T-Shirt",
-    category: "clothing",
     img: "/t_shirt.jpg",
+    brand: "Nike",
     price: 20,
+    category: "clothing",
   },
   {
     id: 2,
     name: "Laptop",
-    category: "electronics",
-    price: 1200,
     img: "/computer.jpg",
+    brand: "Apple",
+    price: 1200,
+    category: "electronics",
   },
   {
     id: 3,
     name: "Sunglasses",
-    category: "accessories",
-    price: 50,
     img: "/sunglass.jpg",
+    brand: "Ray-Ban",
+    price: 50,
+    category: "accessories",
   },
   {
     id: 4,
     name: "Cushion",
-    category: "home-living",
-    price: 15,
     img: "/cushion.jpg",
+    brand: "Ikea",
+    price: 15,
+    category: "home-living",
   },
 ];
 
-export default function App() {
-  const [selectedCategory, setSelectedCategory] = useState(null);
+const CATEGORIES = [
+  { id: "clothing", label: "Clothing" },
+  { id: "electronics", label: "Electronics" },
+  { id: "accessories", label: "Accessories" },
+  { id: "home-living", label: "Home & Living" },
+];
 
-  const categories = [
-    { id: "clothing", label: "Clothing" },
-    { id: "electronics", label: "Electronics" },
-    { id: "accessories", label: "Accessories" },
-    { id: "home-living", label: "Home & Living" },
-  ];
+export default function DealsPage() {
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const filteredProducts = selectedCategory
     ? PRODUCTS.filter((p) => p.category === selectedCategory)
     : PRODUCTS;
 
   return (
-    <main>
-      <h2 className="text-2xl font-semibold mb-4 pt-2">
-        {selectedCategory ? `Products in ${selectedCategory}` : "All Products"}
-      </h2>
-
-      <div className=" flex flex-row gap-8 mb-12 pl-2">
-        {filteredProducts.map((product) => (
-          <div
-            key={product.id}
-            className="p-4 rounded-2xl shadow bg-stone-100 hover:shadow-lg"
+    <main className="max-w-7xl mx-auto px-6 py-8">
+      <div className="flex gap-4 mb-6">
+        {CATEGORIES.map((cat) => (
+          <button
+            key={cat.id}
+            onClick={() => setSelectedCategory(cat.id)}
+            className={`px-4 py-2 rounded-md border ${
+              selectedCategory === cat.id ? "bg-blue-600 text-white" : ""
+            }`}
           >
-            {product.img && (
-              <img
-                src={product.img}
-                alt={product.name}
-                className="w-[125px] h-[100px] object-cover rounded-xl mb-3 mx-auto"
-              />
-            )}
-            <h3 className="text-xl font-bold">{product.name}</h3>
-            <p className="text-gray-600 capitalize">
-              Category: {product.category}
-            </p>
-            <p className="font-semibold">${product.price}</p>
-          </div>
+            {cat.label}
+          </button>
+        ))}
+        <button
+          onClick={() => setSelectedCategory(null)}
+          className="px-4 py-2 rounded-md border"
+        >
+          All
+        </button>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {filteredProducts.map((product) => (
+          <FlipCard key={product.id} product={product} />
         ))}
       </div>
     </main>

@@ -1,21 +1,31 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+
 export default function Header() {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    const stored = localStorage.getItem("isLoggedIn");
+    setIsLoggedIn(!!stored);
+  }, []);
+
   const navItems = [
     { name: "Home", path: "/" },
     { name: "Products", path: "/products" },
     { name: "Signup", path: "/signup" },
   ];
-  const pathname = usePathname();
-  const router = useRouter();
 
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
+    setIsLoggedIn(false);
     router.push("/signup");
   };
+
   return (
     <header className="bg-blue-600 text-white shadow-md">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
@@ -23,6 +33,7 @@ export default function Header() {
           <img src={"/logo.jpg"} className="h-[80px] rounded-lg" />
           <h1 className="text-xl font-bold pt-6">Nivro</h1>
         </div>
+
         <nav>
           <ul className="flex space-x-4">
             {navItems.map((item) => (
@@ -41,15 +52,13 @@ export default function Header() {
         </nav>
 
         <div>
-          {window.localStorage.getItem("isLoggedIn") ? (
-            <div>
-              <button
-                onClick={handleLogout}
-                className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded"
-              >
-                Logout
-              </button>
-            </div>
+          {isLoggedIn ? (
+            <button
+              onClick={handleLogout}
+              className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded"
+            >
+              Logout
+            </button>
           ) : (
             <Link
               href="/signup"

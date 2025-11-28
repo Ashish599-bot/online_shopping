@@ -21,6 +21,5 @@ export async function sendMail(to: string) {
     });
   } catch (error) {
     console.error("Failed to send email:", error);
-    // Don't throw the error to prevent login failure due to email issues
   }
 }
