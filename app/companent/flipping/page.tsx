@@ -12,7 +12,22 @@ interface Product {
 
 export default function FlipCard({ product }: { product: Product }) {
   const [flipped, setFlipped] = useState(false);
+  const [payment, setPayment] = useState("");
 
+  const paymentNow = async () => {
+    setPayment("Processing Payment...");
+
+    const res = await fetch("/api/fake_payment", {
+      method: "POST",
+    });
+    const data = await res.json();
+
+    if (data.status === "success") {
+      setPayment(`Payment Successful (ID:${data.transactionId})`);
+    } else {
+      setPayment("Payment Failed. Please try again");
+    }
+  };
   return (
     <div
       onClick={() => setFlipped(!flipped)}
@@ -35,8 +50,11 @@ export default function FlipCard({ product }: { product: Product }) {
           <h3 className="text-xl font-bold">{product.name}</h3>
           <p className="text-lg font-bold mt-1">${product.price}</p>
           <p className="text-sm opacity-80">{product.brand}</p>
-          <div className="mt-8 flex">
-            <button className="py-3 px-12 bg-green-500 border flex items-center gap-2 rounded-lg shadow-lg hover:shadow-lg cursor-pointer">
+          <div className="mt-8 flex flex-col">
+            <button
+              onClick={() => paymentNow()}
+              className="py-3 px-12 bg-green-500 border flex items-center gap-2 rounded-lg shadow-lg hover:shadow-lg cursor-pointer"
+            >
               Buy Now
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -53,6 +71,8 @@ export default function FlipCard({ product }: { product: Product }) {
                 />
               </svg>
             </button>
+
+            {payment && <p className="mt-2 text-gray-800 font">{payment}</p>}
           </div>
         </div>
       </div>

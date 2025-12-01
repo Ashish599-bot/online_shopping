@@ -1,33 +1,47 @@
 import knex from "knex";
 import knexConfig from "@/knexfile";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { sendMail } from "../email/route";
 
 const kn = knex(knexConfig.development);
+const JWT_SECRET = process.env.JWT_SECRET || "fallback_secret_key";
 
 export async function POST(req: Request) {
   try {
-    const { email, password, user_name } = await req.json();
+    const { email, password } = await req.json();
 
-    if (!email || !password || !user_name) {
+    if (!email || !password)
       return Response.json(
-        { error: "Email, password, and user name required" },
+        { error: "Email & password required" },
         { status: 400 }
       );
-    }
+
     const existingUser = await kn("users").where({ email }).first();
-    if (existingUser) {
-      return Response.json({ error: "User already exists" }, { status: 400 });
-    }
+    if (existingUser)
+      return Response.json({ error: "User already exists" }, { status: 409 });
+
     const hashedPassword = await bcrypt.hash(password, 10);
-    const [newUser] = await kn("users")
-      .insert({ email, password: hashedPassword, user_name })
-      .returning(["id", "email", "user_name"]);
+    const [userId] = await kn("users").insert({
+      email,
+      password: hashedPassword,
+    });
+
+    const token = jwt.sign({ id: userId, email }, JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    sendMail(email, "signup").catch((error) => {
+      console.error("Failed to send welcome email:", error);
+    });
 
     return Response.json({
       message: "Signup successful",
-      user: newUser,
+      token,
+      user: { id: userId, email },
     });
-  } catch (err) {
-    return Response.json({ error: "Server error" }, { status: 500 });
+  } catch (error) {
+    console.error("Signup error:", error);
+    return Response.json({ error: "Internal server error" }, { status: 500 });
   }
 }
